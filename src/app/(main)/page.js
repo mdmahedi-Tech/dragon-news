@@ -1,17 +1,33 @@
-import Image from "next/image";
+import LeftSidebar from "@/components/hompage/news/LeftSidebar";
+import Rightsidbar from "@/components/hompage/Rightsidbar";
 
-export default function Home() {
+import Image from "next/image";
+const  getCategoris= async ()=>{
+    const res= await fetch('https://openapi.programming-hero.com/api/news/categories')
+    const data=await res.json()
+    return data.data.news_category
+;
+
+  }
+
+export default async function Home() {
+  const allcategory=await getCategoris()
+  console.log(allcategory)
+  
   return (
     
+    
     <div className="grid grid-cols-12 container mx-auto gap-4">
-       <div className="bg-amber-400 text-bold col-span-3 border">
-        <h1>all categories</h1>
+       <div className="col-span-3">
+      
+        <LeftSidebar allcategory={allcategory} activeId={'01'}></LeftSidebar>
        </div>
-       <div className="bg-gray-700 text-bold col-span-6 border">
-        <h1>news category</h1>
+       <div className=" text-bold col-span-6 border">
+        <h1 className="text-3xl font-bold">news category</h1>
        </div>
-       <div className="bg-blue-950 text-bold col-span-3 border">
+       <div className="text-bold col-span-3 border">
         <h1>login icons</h1>
+        <Rightsidbar></Rightsidbar>
        </div>
     </div>
     
